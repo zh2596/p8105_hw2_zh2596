@@ -87,20 +87,18 @@ Read and clean the Mr. Trash Wheel sheets, and compute a new column called `home
 
 ```{r message=FALSE}
 Mr_Trash_Wheel = 
-  readxl::read_excel("data/202207 Trash Wheel Collection Data.xlsx", 
+  readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
                      sheet = "Mr. Trash Wheel",
                      range = "A2:N549") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Mr.Trash", 
          Year = as.character(Year)) |>
   arrange(Year, Month) |>
   relocate(name, Year, Month)
-
-Mr_Trash_Wheel = select(Mr_Trash_Wheel, -`Homes Powered*`, -`Date`)
 ```
 
 ```{r message=FALSE}
 Professor_Trash_Wheel = 
-  readxl::read_excel("data/202207 Trash Wheel Collection Data.xlsx", 
+  readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
                      sheet = "Professor Trash Wheel",
                      range = "A2:M96") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Professor",
@@ -108,21 +106,17 @@ Professor_Trash_Wheel =
   arrange(Year, Month) |>
   mutate(name = "Professor") |>
   relocate(name, Year, Month)
-
-Professor_Trash_Wheel = select(Professor_Trash_Wheel, -`Homes Powered*`, -`Date`)
 ```
 
 ```{r message=FALSE}
 Gwynnda_Trash_Wheel = 
-  readxl::read_excel("data/202207 Trash Wheel Collection Data.xlsx", 
+  readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
                      sheet = "Gwynnda Trash Wheel",
                      range = "A2:K108") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Gwynnda",
          Year = as.character(Year)) |>
   arrange(Year, Month) |>
   relocate(name, Year, Month)
-
-Gwynnda_Trash_Wheel = select(Gwynnda_Trash_Wheel, -`Homes Powered*`, -`Date`)
 ```
 
 Combine these with the Mr. Trash Wheel dataset to produce a single tidy dataset.
@@ -169,7 +163,8 @@ baseline =
                       1 ~ "carrier",
                       0 ~ "non-carrier")) |>
   # This step filters out the rows containing null values for "Age at onset",
-  # as well as rows in which the value of "Current age" is larger than that of "Age at onset".
+  # as well as rows in which the value of "Current age" 
+  # is larger than that of "Age at onset".
   filter(!(`Current Age` > `Age at onset` | is.na(`Age at onset`)))
 
 ```
