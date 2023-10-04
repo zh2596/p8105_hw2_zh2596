@@ -89,7 +89,7 @@ Read and clean the Mr. Trash Wheel sheets, and compute a new column called `home
 Mr_Trash_Wheel = 
   readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
                      sheet = "Mr. Trash Wheel",
-                     range = "A2:N549") |>
+                     range = "A2:N584") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Mr.Trash", 
          Year = as.character(Year)) |>
   arrange(Year, Month) |>
@@ -100,7 +100,7 @@ Mr_Trash_Wheel =
 Professor_Trash_Wheel = 
   readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
                      sheet = "Professor Trash Wheel",
-                     range = "A2:M96") |>
+                     range = "A2:M108") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Professor",
          Year = as.character(Year)) |>
   arrange(Year, Month) |>
@@ -112,7 +112,7 @@ Professor_Trash_Wheel =
 Gwynnda_Trash_Wheel = 
   readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
                      sheet = "Gwynnda Trash Wheel",
-                     range = "A2:K108") |>
+                     range = "A2:L157") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Gwynnda",
          Year = as.character(Year)) |>
   arrange(Year, Month) |>
