@@ -91,7 +91,7 @@ Mr_Trash_Wheel =
                      sheet = "Mr. Trash Wheel",
                      range = "A2:N584") |>
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Mr.Trash", 
-         Year = as.character(Year)) |>
+         Year = as.character(Year), `Homes Powered*` = as.numeric(`Homes Powered*`)) |>
   arrange(Year, Month) |>
   relocate(name, Year, Month)
 ```
@@ -104,7 +104,6 @@ Professor_Trash_Wheel =
   mutate(homes_powered = floor(`Weight (tons)` * 500 / 30), name = "Professor",
          Year = as.character(Year)) |>
   arrange(Year, Month) |>
-  mutate(name = "Professor") |>
   relocate(name, Year, Month)
 ```
 
@@ -122,11 +121,7 @@ Gwynnda_Trash_Wheel =
 Combine these with the Mr. Trash Wheel dataset to produce a single tidy dataset.
 
 ```{r message=FALSE, warning=FALSE}
-merge_df_2 =
-  left_join(Professor_Trash_Wheel, Gwynnda_Trash_Wheel, by = c("Year", "Month"))
-
-merge_df_2 = 
-  left_join(Mr_Trash_Wheel, merge_df_2, by = c("Year", "Month"))
+merge_df_2 = bind_rows(Mr_Trash_Wheel, Professor_Trash_Wheel, Gwynnda_Trash_Wheel)
 ```
 
 There are `r nrow(merge_df_2)` observations in this dataset. Some of the key variables include the dumpster ID, Weight and Volume of trash dumped for each of the three vessels. 
@@ -169,6 +164,10 @@ baseline =
 
 ```
 
+```{r}
+head(baseline)
+```
+
 The MCI_baseline csv file includes each participant's current age at the beginning of the study, demographic information including sex and education level, as well as records of whether carrying APOE4 and age at onset of MCI.
 
 ```{r}
@@ -201,6 +200,10 @@ amyloid =
     `Time 2`: `Time 8`,
     names_to = "time period", 
     values_to = "amyloid values")
+```
+
+```{r}
+head(amyloid)
 ```
 
 The mci_amyloid csv file contains each participant's amyloid $\beta$ 42/40 ratio that changes over the study period.
